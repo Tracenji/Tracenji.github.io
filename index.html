@@ -6,11 +6,48 @@
     <title>Birb</title>
   </head>
   <style>
+  body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--ff-body);
+  font-size: 24px;
+  line-height: 1.2;
+}
+  .dark-mode-toggle {
+  position: absolute;
+  z-index: 100;
+  top: 1em;
+  right: 1em;
+  color: var(--foreground);
+  border: 2px solid currentColor;
+  padding: 4px;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 30px;
+  height: 30px;
+}
+.darkmode {
+  --clr-light: #ffffff;
+  --clr-dark: #181A1B;
+  --clr-primary: #202302;
+  --clr-secondary: #00100d;
+  --clr-accent: #ff7750;
+
+  --foreground: var(--clr-light);
+  --background: var(--clr-dark);
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+  
  .center {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
+  margin-left: -31px;
+  margin-right: -30px;
+  width: 102.5%;
 }
 .collapsible {
 }
@@ -23,6 +60,9 @@
    </body>
    <img src="Images/BirbBanner.jfif" alt="Birb" class="center">
 <h1>Birb website</h1>
+<button id="dark-mode-toggle" class="dark-mode-toggle">
+  <svg width="100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 496"><path fill="currentColor" d="M8,256C8,393,119,504,256,504S504,393,504,256,393,8,256,8,8,119,8,256ZM256,440V72a184,184,0,0,1,0,368Z" transform="translate(-8 -8)"/></svg>
+</button>
 <button type="button" class="collapsible">RADIO</button>
 <div class="content">
 <a href="https://www.radiotrondelag.no/" target="_blank">RADIO TRØNDELAG</a>
@@ -94,6 +134,45 @@ for (i = 0; i < coll.length; i++) {
       0
     )
     // }
+	
+	// check for saved 'darkMode' in localStorage
+let darkMode = localStorage.getItem('darkMode'); 
+
+const darkModeToggle = document.querySelector('#dark-mode-toggle');
+
+const enableDarkMode = () => {
+  // 1. Add the class to the body
+  document.body.classList.add('darkmode');
+  // 2. Update darkMode in localStorage
+  localStorage.setItem('darkMode', 'enabled');
+}
+
+const disableDarkMode = () => {
+  // 1. Remove the class from the body
+  document.body.classList.remove('darkmode');
+  // 2. Update darkMode in localStorage 
+  localStorage.setItem('darkMode', null);
+}
+ 
+// If the user already visited and enabled darkMode
+// start things off with it on
+if (darkMode === 'enabled') {
+  enableDarkMode();
+}
+
+// When someone clicks the button
+darkModeToggle.addEventListener('click', () => {
+  // get their darkMode setting
+  darkMode = localStorage.getItem('darkMode'); 
+  
+  // if it not current enabled, enable it
+  if (darkMode !== 'enabled') {
+    enableDarkMode();
+  // if it has been enabled, turn it off  
+  } else {  
+    disableDarkMode(); 
+  }
+});
   </script>
 </body>
  </html>
